@@ -2,7 +2,7 @@ import re
 import urllib.request
 import sys
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, exists
 
 basepath = 'downloads/'
 SEPARATOR = '|'
@@ -13,6 +13,14 @@ def dl_progress(count, block_size, total_size):
     sys.stdout.write("\r...%d%%" % percent)
     sys.stdout.flush()
 
+if exists(basepath):
+    if exists("clips.txt"):
+        print('\nReady to go, starting download.')
+
+    else:
+        sys.exit('\nYou are missing clips.txt. Please create this file so we know what to download')
+else:
+    sys.exit('\nYou are missing your downloads folder. Please create this directory so we have somewhere to put the clips.')
     
 skipped_clips = [];
 for clip in open('clips.txt', 'r'):
